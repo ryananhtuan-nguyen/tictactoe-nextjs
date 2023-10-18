@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Home = () => {
   //innertext for each box
@@ -10,11 +10,56 @@ const Home = () => {
   //If game is over or not
   const [isOver, setIsOver] = useState(false)
 
+  //Logic of the game
+  function checkWin(symbol: string) {
+    let over = false
+    // HORIZONTAL LINES //
+    if (boxes[0] == symbol && boxes[1] == symbol && boxes[2] == symbol) {
+      over = true
+      setIsOver(over)
+    } else if (boxes[3] == symbol && boxes[4] == symbol && boxes[5] == symbol) {
+      over = true
+      setIsOver(over)
+    } else if (boxes[6] == symbol && boxes[7] == symbol && boxes[8] == symbol) {
+      over = true
+      setIsOver(over)
+    }
+    // VERTICAL LINES //
+
+    if (boxes[0] == symbol && boxes[3] == symbol && boxes[6] == symbol) {
+      over = true
+      setIsOver(over)
+    } else if (boxes[1] == symbol && boxes[4] == symbol && boxes[7] == symbol) {
+      over = true
+      setIsOver(over)
+    } else if (boxes[2] == symbol && boxes[5] == symbol && boxes[8] == symbol) {
+      over = true
+      setIsOver(over)
+    }
+
+    // DIAGONAL LINES //
+
+    if (boxes[0] == symbol && boxes[4] == symbol && boxes[8] == symbol) {
+      over = true
+      setIsOver(over)
+    } else if (boxes[2] == symbol && boxes[4] == symbol && boxes[6] == symbol) {
+      over = true
+      setIsOver(over)
+    }
+  }
+
+  //useEffect to check win every turn
+  useEffect(() => {
+    checkWin(player == 'X' ? 'O' : 'X')
+  }, [player])
+
   //handle click on each box
   function handleClick(idx: number) {
     const newArr = [...boxes]
+    //if clicked on a not empty box do not change value
     newArr[idx] = boxes[idx] === '' ? player : boxes[idx]
-    if (newArr != boxes) {
+    //if nothing changed do not change turn/values of the box
+    if (newArr.some((item, idx) => item !== boxes[idx])) {
       setPlayer((pre) => (pre == 'X' ? 'O' : 'X'))
       setBoxes(newArr)
     }
@@ -58,7 +103,20 @@ const Home = () => {
           ))}{' '}
         </tr>
       </table>
-      <h1>{player} s turn</h1>
+      {!isOver && <h1>{player} s turn</h1>}
+      {isOver && (
+        <>
+          <h1>{player == 'X' ? 'O' : 'X'} has won!</h1>
+          <button
+            onClick={() => {
+              setBoxes(['', '', '', '', '', '', '', '', ''])
+              setIsOver(false)
+            }}
+          >
+            Restart
+          </button>
+        </>
+      )}
     </div>
   )
 }
