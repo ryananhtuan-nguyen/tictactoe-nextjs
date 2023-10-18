@@ -12,40 +12,20 @@ const Home = () => {
 
   //Logic of the game
   function checkWin(symbol: string) {
-    let over = false
-    // HORIZONTAL LINES //
-    if (boxes[0] == symbol && boxes[1] == symbol && boxes[2] == symbol) {
-      over = true
-      setIsOver(over)
-    } else if (boxes[3] == symbol && boxes[4] == symbol && boxes[5] == symbol) {
-      over = true
-      setIsOver(over)
-    } else if (boxes[6] == symbol && boxes[7] == symbol && boxes[8] == symbol) {
-      over = true
-      setIsOver(over)
-    }
-    // VERTICAL LINES //
-
-    if (boxes[0] == symbol && boxes[3] == symbol && boxes[6] == symbol) {
-      over = true
-      setIsOver(over)
-    } else if (boxes[1] == symbol && boxes[4] == symbol && boxes[7] == symbol) {
-      over = true
-      setIsOver(over)
-    } else if (boxes[2] == symbol && boxes[5] == symbol && boxes[8] == symbol) {
-      over = true
-      setIsOver(over)
-    }
-
-    // DIAGONAL LINES //
-
-    if (boxes[0] == symbol && boxes[4] == symbol && boxes[8] == symbol) {
-      over = true
-      setIsOver(over)
-    } else if (boxes[2] == symbol && boxes[4] == symbol && boxes[6] == symbol) {
-      over = true
-      setIsOver(over)
-    }
+    const winningSet = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ]
+    winningSet.forEach(([a, b, c]) => {
+      if (boxes[a] == symbol && boxes[b] == symbol && boxes[c] == symbol)
+        setIsOver(true)
+    })
   }
 
   //useEffect to check win every turn
