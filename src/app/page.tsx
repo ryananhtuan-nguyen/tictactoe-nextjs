@@ -64,50 +64,28 @@ const Home = () => {
     }
   }
   return (
-    <div className="flex flex-col justify-center items-center gap-12">
-      <h1 className="text-center">Home</h1>
+    <div className="flex flex-col justify-center items-center h-full mb-12">
+      <h1 className="text-5xl font-bold m-6">Tic Tac Toe</h1>
 
-      <table className="border-spacing-0 border-collapse w-[500px] h-[500px] bg-white text-red">
-        <tr>
-          {boxes.slice(0, 3).map((item, idx) => (
-            <td
-              key={idx}
-              className="border-2 border-black text-center w-[8vw] h-[8vh] text-5xl"
-              onClick={() => (!isOver ? handleClick(idx) : {})}
-            >
-              {item}
-            </td>
-          ))}
-        </tr>
-        <tr>
-          {boxes.slice(3, 6).map((item, idx) => (
-            <td
-              key={idx + 3}
-              className="border-2 border-black text-center w-[8vw] h-[8vh] text-5xl"
-              onClick={() => (!isOver ? handleClick(idx + 3) : {})}
-            >
-              {item}
-            </td>
-          ))}
-        </tr>
-        <tr>
-          {boxes.slice(6, 9).map((item, idx) => (
-            <td
-              key={idx + 6}
-              className="border-2 border-black text-center w-[8vw] h-[8vh] text-5xl"
-              onClick={() => (!isOver ? handleClick(idx + 6) : {})}
-            >
-              {item}
-            </td>
-          ))}{' '}
-        </tr>
-      </table>
-      {!isOver && <h1 className="text-center">{player} s turn</h1>}
+      {!isOver && (
+        <h1 className="m-4 text-2xl font-semibold border-2 border-gray-400 py-4 px-8 shadow-2xl animate-bounce">
+          {player} s turn
+        </h1>
+      )}
       {(isOver || isDraw) && (
         <div className="flex flex-col justify-center items-center">
-          {!isDraw && <h1>{player == 'X' ? 'O' : 'X'} has won!</h1>}
-          {isDraw && <h1>DRAW!!!!!!!</h1>}
+          {!isDraw && (
+            <h1 className="m-4 text-2xl font-semibold border-2 border-gray-400 py-4 px-8 shadow-2xl animate-bounce">
+              {player == 'X' ? 'O' : 'X'} has won!
+            </h1>
+          )}
+          {isDraw && (
+            <h1 className="m-4 text-2xl font-semibold border-2 border-gray-400 py-4 px-8 shadow-2xl animate-bounce">
+              DRAW!!!!!!!
+            </h1>
+          )}
           <button
+            className="border-2 m-8 p-4 cursor-pointer hover:bg-black hover:text-white hover:rounded-lg scale-105 ease-in-out duration-300"
             onClick={() => {
               setBoxes(['', '', '', '', '', '', '', '', ''])
               setIsOver(false)
@@ -118,6 +96,41 @@ const Home = () => {
           </button>
         </div>
       )}
+      <table className="flex flex-col justify-between w-[500px] h-[500px]">
+        <tr className="flex justify-between">
+          {boxes.slice(0, 3).map((item, idx) => (
+            <td
+              key={idx}
+              className="flex justify-center items-center cursor-pointer hover:scale-110 focus:scale-110 ease-in-out duration-200 hover:rounded-2xl active:bg-black shadow-2xl border-2 border-black  w-[200px] h-[200px] text-5xl"
+              onClick={() => (!isOver ? handleClick(idx) : {})}
+            >
+              {item}
+            </td>
+          ))}
+        </tr>
+        <tr className="flex justify-between">
+          {boxes.slice(3, 6).map((item, idx) => (
+            <td
+              key={idx + 3}
+              className="flex justify-center items-center cursor-pointer hover:scale-110 focus:scale-110 ease-in-out duration-200 hover:rounded-2xl active:bg-black shadow-2xl border-2 border-black  w-[200px] h-[200px] text-5xl"
+              onClick={() => (!isOver ? handleClick(idx + 3) : {})}
+            >
+              {item}
+            </td>
+          ))}
+        </tr>
+        <tr className="flex justify-between">
+          {boxes.slice(6, 9).map((item, idx) => (
+            <td
+              key={idx + 6}
+              className="flex justify-center items-center cursor-pointer hover:scale-110 focus:scale-110 ease-in-out duration-200 hover:rounded-2xl active:bg-black shadow-2xl border-2 border-black  w-[200px] h-[200px] text-5xl"
+              onClick={() => (!isOver ? handleClick(idx + 6) : {})}
+            >
+              {item}
+            </td>
+          ))}{' '}
+        </tr>
+      </table>
     </div>
   )
 }
