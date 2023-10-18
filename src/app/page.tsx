@@ -15,7 +15,7 @@ const Home = () => {
   const [isDraw, setIsDraw] = useState(false)
 
   //Logic of the game
-  function checkWin(symbol: string) {
+  function checkWin(symbol: string, arr = boxes) {
     const winningSet = [
       [0, 1, 2],
       [3, 4, 5],
@@ -26,39 +26,29 @@ const Home = () => {
       [0, 4, 8],
       [2, 4, 6],
     ]
+    let hasWon = false
     winningSet.forEach(([a, b, c]) => {
-      if (boxes[a] == symbol && boxes[b] == symbol && boxes[c] == symbol)
+      if (arr[a] == symbol && arr[b] == symbol && arr[c] == symbol) {
         setIsOver(true)
-      return true
+        hasWon = true
+        return
+      }
     })
-    return false
+    return hasWon
   }
-
-  function checkDraw() {
-    let allFilled = true
-    boxes.forEach((item) => {
-      if (item.length == 0) allFilled = false
-    })
-
-    if (allFilled && !isOver) {
-      setIsDraw(true)
-      setIsOver(true)
-      return true
-    }
-  }
-
-  //useEffect to check win every turn
-  useEffect(() => {
-    checkWin(player === 'X' ? 'O' : 'X')
-  }, [boxes])
 
   //handle click on each box
-  function handleClick(idx: number) {
+  async function handleClick(idx: number) {
     const newArr = [...boxes]
     //if clicked on a not empty box do not change value
     newArr[idx] = boxes[idx] === '' ? player : boxes[idx]
     //if nothing changed do not change turn/values of the box
     if (newArr.some((item, idx) => item !== boxes[idx])) {
+      const hasWon = checkWin(player, newArr)
+      if (newArr.every((item) => item.length > 0) && !hasWon) {
+        setIsOver(true)
+        setIsDraw(true)
+      }
       setPlayer((pre) => (pre == 'X' ? 'O' : 'X'))
       setBoxes(newArr)
     }
