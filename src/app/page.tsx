@@ -29,7 +29,9 @@ const Home = () => {
     winningSet.forEach(([a, b, c]) => {
       if (boxes[a] == symbol && boxes[b] == symbol && boxes[c] == symbol)
         setIsOver(true)
+      return true
     })
+    return false
   }
 
   function checkDraw() {
@@ -37,9 +39,8 @@ const Home = () => {
     boxes.forEach((item) => {
       if (item.length == 0) allFilled = false
     })
-    if (!allFilled && !isOver) {
-      return false
-    } else if (allFilled && !isOver) {
+
+    if (allFilled && !isOver) {
       setIsDraw(true)
       setIsOver(true)
       return true
@@ -48,9 +49,8 @@ const Home = () => {
 
   //useEffect to check win every turn
   useEffect(() => {
-    checkWin(player == 'X' ? 'O' : 'X')
-    checkDraw()
-  }, [player])
+    checkWin(player === 'X' ? 'O' : 'X')
+  }, [boxes])
 
   //handle click on each box
   function handleClick(idx: number) {
