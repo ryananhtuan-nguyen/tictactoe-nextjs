@@ -45,8 +45,8 @@ const Home = () => {
     }
   }
   return (
-    <div className="flex flex-col justify-center gap-12">
-      <h1>Home</h1>
+    <div className="flex flex-col justify-center items-center gap-12">
+      <h1 className="text-center">Home</h1>
 
       <table className="border-spacing-0 border-collapse w-[500px] h-[500px]">
         <tr>
@@ -83,9 +83,9 @@ const Home = () => {
           ))}{' '}
         </tr>
       </table>
-      {!isOver && <h1>{player} s turn</h1>}
+      {!isOver && <h1 className="text-center">{player} s turn</h1>}
       {isOver && (
-        <>
+        <div className="flex flex-col justify-center items-center">
           <h1>{player == 'X' ? 'O' : 'X'} has won!</h1>
           <button
             onClick={() => {
@@ -95,7 +95,7 @@ const Home = () => {
           >
             Restart
           </button>
-        </>
+        </div>
       )}
     </div>
   )
